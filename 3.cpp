@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+string sol(int A){
+    if(A==1) return string("1");
+    vector<pair<long long int,int>>mod(A,{-1,0});
+    queue<int>q;
+    q.push(1);
+    while(mod[0].first==-1){
+        int t = q.front();
+        q.pop();
+        int n1 = (t*10+0)%A;
+        int n2 = (t*10+1)%A;
+        //cout<<t<<" "<<n1<<" "<<n2<<endl;
+        if(mod[n1].first==-1) {
+            mod[n1].first = t;
+            mod[n1].second = 0;
+            q.push(n1);
+        }
+        if(mod[n2].first==-1) {
+            mod[n2].first = t;
+            mod[n2].second = 1;
+            q.push(n2);
+        }
+        if(n1==0 || n2==0) break;
+    }
+    string ans;
+    int curr=0;
+    while(curr!=1){
+        // cout<<curr<<endl;
+        ans = to_string(mod[curr].second)+ans;
+        curr = mod[curr].first;
+    }
+    ans = to_string(1)+ans;
+    return ans;
+}
+
+int main(){
+    int q;
+    cin>>q;
+    while(q--){
+        int n;
+        cin>>n;
+        cout<<sol(n)<<endl;
+    }
+}
